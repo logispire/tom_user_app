@@ -25,6 +25,7 @@ import 'package:sixam_mart/view/screens/item/widget/item_title_view.dart';
 class ItemDetailsScreen extends StatefulWidget {
   final Item? item;
   final bool inStorePage;
+
   const ItemDetailsScreen(
       {Key? key, required this.item, required this.inStorePage})
       : super(key: key);
@@ -550,56 +551,15 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                                                   cartList: [cartModel],
                                                 ));
                                           } else {
-                                            if (Get.find<CartController>()
-                                                .existAnotherStoreItem(
-                                                    cartModel!.item!.storeId,
-                                                    Get.find<SplashController>()
-                                                                .module ==
-                                                            null
-                                                        ? Get.find<
-                                                                SplashController>()
-                                                            .cacheModule!
-                                                            .id
-                                                        : Get.find<
-                                                                SplashController>()
-                                                            .module!
-                                                            .id)) {
-                                              Get.dialog(
-                                                  ConfirmationDialog(
-                                                    icon: Images.warning,
-                                                    title:
-                                                        'are_you_sure_to_reset'
-                                                            .tr,
-                                                    description: Get.find<
-                                                                SplashController>()
-                                                            .configModel!
-                                                            .moduleConfig!
-                                                            .module!
-                                                            .showRestaurantText!
-                                                        ? 'if_you_continue'.tr
-                                                        : 'if_you_continue_without_another_store'
-                                                            .tr,
-                                                    onYesPressed: () {
-                                                      Get.back();
-                                                      Get.find<CartController>()
-                                                          .removeAllAndAddToCart(
-                                                              cartModel!);
-                                                      showCartSnackBar();
-                                                    },
-                                                  ),
-                                                  barrierDismissible: false);
-                                            } else {
-                                              if (itemController.cartIndex ==
-                                                  -1) {
-                                                Get.find<CartController>()
-                                                    .addToCart(
-                                                        cartModel,
-                                                        itemController
-                                                            .cartIndex);
-                                              }
-                                              _key.currentState!.shake();
-                                              showCartSnackBar();
+                                            if (itemController.cartIndex ==
+                                                    -1 &&
+                                                cartModel != null) {
+                                              Get.find<CartController>()
+                                                  .addToCart(cartModel,
+                                                      itemController.cartIndex);
                                             }
+                                            _key.currentState!.shake();
+                                            showCartSnackBar();
                                           }
                                         }
                                       }
@@ -622,6 +582,7 @@ class QuantityButton extends StatelessWidget {
   final int? stock;
   final bool isExistInCart;
   final int cartIndex;
+
   const QuantityButton({
     Key? key,
     required this.isIncrement,

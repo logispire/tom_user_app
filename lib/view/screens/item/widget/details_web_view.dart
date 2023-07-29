@@ -25,6 +25,7 @@ class DetailsWebView extends StatelessWidget {
   final CartModel? cartModel;
   final int? stock;
   final double priceWithAddOns;
+
   const DetailsWebView(
       {Key? key,
       required this.cartModel,
@@ -407,46 +408,6 @@ class DetailsWebView extends StatelessWidget {
                                                                         cartModel
                                                                       ],
                                                                     ));
-                                                              } else if (Get.find<
-                                                                      CartController>()
-                                                                  .existAnotherStoreItem(
-                                                                      cartModel!
-                                                                          .item!
-                                                                          .storeId,
-                                                                      Get.find<
-                                                                              SplashController>()
-                                                                          .module!
-                                                                          .id)) {
-                                                                Get.dialog(
-                                                                    ConfirmationDialog(
-                                                                      icon: Images
-                                                                          .warning,
-                                                                      title:
-                                                                          'are_you_sure_to_reset'
-                                                                              .tr,
-                                                                      description: Get.find<SplashController>()
-                                                                              .configModel!
-                                                                              .moduleConfig!
-                                                                              .module!
-                                                                              .showRestaurantText!
-                                                                          ? 'if_you_continue'
-                                                                              .tr
-                                                                          : 'if_you_continue_without_another_store'
-                                                                              .tr,
-                                                                      onYesPressed:
-                                                                          () {
-                                                                        Get.back();
-                                                                        Get.find<CartController>()
-                                                                            .removeAllAndAddToCart(cartModel!);
-                                                                        showCustomSnackBar(
-                                                                            'item_added_to_cart'
-                                                                                .tr,
-                                                                            isError:
-                                                                                false);
-                                                                      },
-                                                                    ),
-                                                                    barrierDismissible:
-                                                                        false);
                                                               } else {
                                                                 if (itemController
                                                                         .cartIndex ==

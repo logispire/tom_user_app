@@ -31,6 +31,7 @@ class ItemBottomSheet extends StatefulWidget {
   final CartModel? cart;
   final int? cartIndex;
   final bool inStorePage;
+
   const ItemBottomSheet(
       {Key? key,
       required this.item,
@@ -795,53 +796,13 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
                                                   cartList: [cartModel],
                                                 ));
                                           } else {
-                                            if (Get.find<CartController>()
-                                                .existAnotherStoreItem(
-                                                    cartModel.item!.storeId,
-                                                    Get.find<SplashController>()
-                                                                .module !=
-                                                            null
-                                                        ? Get.find<
-                                                                SplashController>()
-                                                            .module!
-                                                            .id
-                                                        : Get.find<
-                                                                SplashController>()
-                                                            .cacheModule!
-                                                            .id)) {
-                                              Get.dialog(
-                                                  ConfirmationDialog(
-                                                    icon: Images.warning,
-                                                    title:
-                                                        'are_you_sure_to_reset'
-                                                            .tr,
-                                                    description: Get.find<
-                                                                SplashController>()
-                                                            .configModel!
-                                                            .moduleConfig!
-                                                            .module!
-                                                            .showRestaurantText!
-                                                        ? 'if_you_continue'.tr
-                                                        : 'if_you_continue_without_another_store'
-                                                            .tr,
-                                                    onYesPressed: () {
-                                                      Get.back();
-                                                      Get.find<CartController>()
-                                                          .removeAllAndAddToCart(
-                                                              cartModel);
-                                                      showCartSnackBar();
-                                                    },
-                                                  ),
-                                                  barrierDismissible: false);
-                                            } else {
-                                              Get.find<CartController>()
-                                                  .addToCart(
-                                                cartModel,
-                                                widget.cartIndex ??
-                                                    itemController.cartIndex,
-                                              );
-                                              showCartSnackBar();
-                                            }
+                                            Get.find<CartController>()
+                                                .addToCart(
+                                              cartModel,
+                                              widget.cartIndex ??
+                                                  itemController.cartIndex,
+                                            );
+                                            showCartSnackBar();
                                           }
                                         }
                                       },
@@ -884,6 +845,7 @@ class _ItemBottomSheetState extends State<ItemBottomSheet> {
 class AddonView extends StatelessWidget {
   final Item item;
   final ItemController itemController;
+
   const AddonView({Key? key, required this.item, required this.itemController})
       : super(key: key);
 
@@ -1036,6 +998,7 @@ class AddonView extends StatelessWidget {
 class VariationView extends StatelessWidget {
   final Item? item;
   final ItemController itemController;
+
   const VariationView(
       {Key? key, required this.item, required this.itemController})
       : super(key: key);
@@ -1109,6 +1072,7 @@ class VariationView extends StatelessWidget {
 class NewVariationView extends StatelessWidget {
   final Item? item;
   final ItemController itemController;
+
   const NewVariationView(
       {Key? key, required this.item, required this.itemController})
       : super(key: key);
